@@ -1,0 +1,15 @@
+PROJEKT_KUNDENAUFTRAG/
+├── index.php              
+├── config.php             
+├── assets/
+│   └── css/
+│       └── styles.css     
+├── includes/
+│   ├── header.php         
+│   ├── footer.php         
+│   └── sidebar.php        
+└── sub_directories/
+    ├── pos.php            
+    ├── lagerverwaltung.php 
+    ├── admin.php          
+    └── einstellungen.php  
