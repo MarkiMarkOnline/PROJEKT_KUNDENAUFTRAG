@@ -12,4 +12,5 @@ PROJEKT_KUNDENAUFTRAG/
     ├── pos.php            
     ├── lagerverwaltung.php 
     ├── admin.php          
-    └── einstellungen.php  
+    └── einstellungen.php
+    
