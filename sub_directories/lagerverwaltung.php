@@ -5,15 +5,13 @@ include __DIR__ . '/../includes/sidebar.php';
 ?>
 
 
-<main class="grid">
-    <!-- Bestandspflege Modul -->
+<main class="grid-lagerverwaltung" id="lager">
     <div class="module lager-module" id="bestand">
         <h2>Bestandspflege</h2>
         <p>Einpflegen von Bestellungen</p>
         <p>Bestände aktualisieren</p>
     </div>
-
-    <!-- Berichte Modul -->
+    
     <div class="module lager-module" id="berichte">
         <h2>Berichte</h2>
         <p>Berichte von Artikel mit geringem Bestand</p>
@@ -21,8 +19,7 @@ include __DIR__ . '/../includes/sidebar.php';
         <p>Berichte von Artikeln mit niedrigem MHD</p>
         <p>Umsatzberichte</p>
     </div>
-
-    <!-- Verwaltung Modul -->
+    
     <div class="module lager-module" id="verwaltung">
         <h2>Verwaltung</h2>
         <p>Hinzufügen neuer Artikelvarianten</p>
@@ -30,34 +27,27 @@ include __DIR__ . '/../includes/sidebar.php';
         <p>Hinzufügen von Lieferanten</p>
         <p>Entfernen von Lieferanten</p>
     </div>
-
-    <!-- Bericht erstellen Modul (volle Breite) -->
-    <div class="module lager-module report-module">
+    
+    <div class="module report-module">
         <h2>Bericht über:</h2>
-        <label for="art">Zeige alle Artikel mit einem:</label>
-        <select id="art" name="genre">
-            <option value="bestand">Bestand</option>
-            <option value="mhd">MHD</option>
-            <option value="umsatz">Umsatz</option>
+        <label>Zeige alle Artikel mit einem:</label>
+        <select>
+            <option>Bestand</option>
+            <option>MHD</option>
         </select>
-
-        <select id="vergleich" name="vergleich">
-            <option value="groesser">größer</option>
-            <option value="kleiner">kleiner</option>
+        <select>
+            <option>größer</option>
+            <option>kleiner</option>
         </select>
-
-        <input type="number" id="anzahl" name="anzahl">
-
-        <button type="button" class="admin-btn">OK</button>
+        <input type="number" placeholder="0">
+        <button>OK</button>
     </div>
-
-    <!-- Tabellen-Ansicht Modul (volle Breite) -->
+    
     <div class="module table-module">
-        <p>Tabelle Tabelle Tabelle Tabelle Tabelle Tabelle Tabelle Tabelle </p>
-        <p>Tabelle Tabelle Tabelle Tabelle Tabelle Tabelle Tabelle Tabelle</p>
-        <p>Tabelle Tabelle Tabelle Tabelle Tabelle Tabelle Tabelle Tabelle</p>
-        <button type="button" class="admin-btn">Bericht drucken oder versenden</button>       
+        <h2>Artikelliste</h2>
+        <p>Hier würde die Tabelle mit den Ergebnissen erscheinen...</p>
     </div>
 </main>
+
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
