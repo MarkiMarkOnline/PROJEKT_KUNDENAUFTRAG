@@ -22,3 +22,4 @@ include __DIR__ . '/../includes/sidebar.php';
 </main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
+<!-- Test -->
