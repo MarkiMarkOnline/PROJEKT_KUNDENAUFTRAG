@@ -10,7 +10,8 @@
     <?php if (!defined('BASE_URL')) require_once __DIR__ . '/config.php'; ?>
 
     <link rel="stylesheet" href="<?php echo rtrim(BASE_URL, '/'); ?>/assets/css/styles.css?v=<?php echo ASSET_VERSION; ?>">
-
+    <link rel="stylesheet" href="../assets/css/pos.css">
+    
 </head>
 <body class="theme-hofladen">
 <header class="header">
