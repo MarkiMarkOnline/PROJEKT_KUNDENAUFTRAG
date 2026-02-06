@@ -14,7 +14,7 @@ include __DIR__ . '/../includes/sidebar.php';
     <!-- Warenkorb & Checkout -->
     <div class="grid-pos">
         <section class="pos-cart">
-            <h2>Warenkorb</h2>
+            <h2 class="warenkorb">Warenkorb</h2>
             <div class="pos-cart-items"></div>
             <div id="cartTotal" class="pos-total">0,00 €</div>
         </section>

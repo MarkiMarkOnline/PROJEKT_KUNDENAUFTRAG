@@ -1,6 +1,5 @@
-/* ==============================
-   POS SYSTEM JS
-============================== */
+
+/*POS SYSTEM JS*/
 
 const searchInput = document.querySelector(".pos-search-input");
 const searchResults = document.querySelector(".pos-search-results");
@@ -38,7 +37,7 @@ searchInput.addEventListener("input", async () => {
       li.addEventListener("click", () => {
         addToCart(item);
         searchInput.value = "";
-        searchResults.style.display = "none"; // hide after selection
+        searchResults.style.display = "none";
       });
       searchResults.appendChild(li);
     });

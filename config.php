@@ -10,7 +10,7 @@ define('BASE_URL', '/PROJEKT_KUNDENAUFTRAG');
 define('ASSET_VERSION', '1');
 
 
-$host = "127.0.0.1;port=3306"; // include port
+$host = "127.0.0.1;port=3306"; 
 $db   = "db_hofladen";
 $user = "root";
 $pass = "";
