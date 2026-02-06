@@ -13,19 +13,21 @@ if (isset($_POST['check_admin'])) {
     exit;
 }
 
+// Datenbankverbindung einbinden
 require_once __DIR__ . '/../config.php';
+
+// config.php wird durch header.php geladen
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/sidebar.php';
 
 
-// Steuersatz speichern
+// Steuersatz speichern - für t_mwst Tabelle
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['steuersatz'])) {
-    require_once __DIR__ . '/../config.php';
-    
-    $steuersatz = (int)$_POST['steuersatz'];
+    $steuersatz = (float)$_POST['steuersatz'];
 
-    $stmt = $pdo->prepare("INSERT INTO steuersatz (satz, erstellt_am) VALUES (:satz, NOW())");
-    $stmt->execute([':satz' => $steuersatz]);
+    // Steuersatz in t_mwst Tabelle einfügen
+    $stmt = $pdo->prepare("INSERT INTO t_mwst (mwst) VALUES (:mwst)");
+    $stmt->execute([':mwst' => $steuersatz]);
 
     if (isset($_POST['speichern_schliessen'])) {
         echo "<script>
@@ -37,15 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['steuersatz'])) {
     }
 }
 
-// Mitarbeiter speichern
+// Mitarbeiter speichern - für t_mitarbeiter Tabelle
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_mitarbeiter'])) {
-    require_once __DIR__ . '/../config.php';
-    
     $vorname = $_POST['vorname'] ?? '';
     $nachname = $_POST['nachname'] ?? '';
+    // rolle: 1 = Admin, 0 = Mitarbeiter
     $rolle = isset($_POST['rolle']) && $_POST['rolle'] === 'admin' ? 1 : 0;
 
-    $stmt = $pdo->prepare("INSERT INTO t_Mitarbeiter (Vorname, Nachname, Rolle) VALUES (:vorname, :nachname, :rolle)");
+    // Mitarbeiter in t_mitarbeiter Tabelle einfügen
+    $stmt = $pdo->prepare("INSERT INTO t_mitarbeiter (vorname, nachname, rolle) VALUES (:vorname, :nachname, :rolle)");
     $stmt->execute([
         ':vorname' => $vorname,
         ':nachname' => $nachname,
@@ -72,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_mitarbeiter'])) 
     </div>
 
     <div class="module">
-        <h3>Systemverwaltung</h3>
+        <h3>Lagerverwaltung</h3>
         <button class="admin-btn" data-modal="systemModal">Lagerverwaltung</button>
     </div>
 
@@ -221,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_mitarbeiter'])) 
             <h3>Neuen Steuersatz festlegen</h3>
 
             <label>Neuer Steuersatz (%)</label><br>
-            <input type="number" name="steuersatz" min="0" max="100" style="width:100%; padding:8px;"><br><br>
+            <input type="number" name="steuersatz" min="0" max="100" step="0.01" style="width:100%; padding:8px;"><br><br>
 
             <button type="submit" name="speichern" class="admin-btn">Speichern</button>
             <button type="submit" name="speichern_schliessen" class="admin-btn">Speichern und Schließen</button>
@@ -440,7 +442,6 @@ function speichereProtokoll() {
     const auswahl = document.getElementById('protokollAuswahl').value;
     if (auswahl) {
         alert('Protokoll wird gespeichert: ' + auswahl);
-        // Hier können Sie die Speicherlogik implementieren
     } else {
         alert('Kein Protokoll zum Speichern ausgewählt');
     }
@@ -451,7 +452,6 @@ function erstelleBackup() {
     const verzeichnis = document.getElementById('backupVerzeichnis').value;
     if (verzeichnis) {
         alert('Backup wird erstellt im Verzeichnis: ' + verzeichnis);
-        // Hier können Sie die Backup-Logik implementieren
     } else {
         alert('Bitte geben Sie ein Verzeichnis an');
     }
@@ -462,7 +462,6 @@ function wiederherstellenBackup() {
     if (verzeichnis) {
         if (confirm('Möchten Sie wirklich das Backup wiederherstellen? Alle aktuellen Daten werden überschrieben!')) {
             alert('Backup wird wiederhergestellt aus: ' + verzeichnis);
-            // Hier können Sie die Wiederherstellungs-Logik implementieren
         }
     } else {
         alert('Bitte geben Sie ein Verzeichnis an');
