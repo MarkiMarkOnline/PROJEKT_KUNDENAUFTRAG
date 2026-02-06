@@ -41,8 +41,9 @@
 }
 
 .pos-search-results {
+  display: none;
   position: absolute;
-  top: 70px; /* slightly below the input */
+  top: 70px;
   left: 0;
   right: 0;
   background: #f5f4e2;
@@ -90,7 +91,9 @@
 /* ================================
    CART
    ================================ */
-
+.warenkorb {
+  margin-left: 7px;
+}
 .pos-cart {
   background: #456734;
   color: #f5f4e2;
@@ -107,6 +110,8 @@
   flex: 1;
   overflow-y: auto;
   margin-top: 14px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .pos-item {
@@ -137,6 +142,7 @@
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: auto;
+  margin-left: 7px;
 }
 
 .pos-payments {
