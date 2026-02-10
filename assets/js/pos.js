@@ -2,15 +2,15 @@
 
 //  DOM CACHE
 const DOM = {
-  searchInput: document.querySelector(".pos-search-input"), // search input field
-  searchResults: document.querySelector(".pos-search-results"), // dropdown results
-  cartItems: document.querySelector(".pos-cart-items"), // cart container
-  cartTotal: document.getElementById("cartTotal"), // total in cart section
-  checkoutTotal: document.getElementById("checkoutTotal"), // total in checkout section
-  paymentPanel: document.getElementById("paymentPanel"), // popup panel
-  paymentTitle: document.getElementById("paymentTitle"), // title of payment popup
-  barOptions: document.getElementById("barOptions"), // cash payment section
-  cashInput: document.getElementById("cashAmount"), // cash input field
+  searchInput: document.querySelector(".pos-search-input"),
+  searchResults: document.querySelector(".pos-search-results"),
+  cartItems: document.querySelector(".pos-cart-items"),
+  cartTotal: document.getElementById("cartTotal"),
+  checkoutTotal: document.getElementById("checkoutTotal"),
+  paymentPanel: document.getElementById("paymentPanel"),
+  paymentTitle: document.getElementById("paymentTitle"),
+  barOptions: document.getElementById("barOptions"),
+  cashInput: document.getElementById("cashAmount"),
 };
 
 //   STATE
@@ -93,9 +93,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// ========================================
 // CART
-// ========================================
 
 function addToCart(item) {
   const id = item.id_artikel;

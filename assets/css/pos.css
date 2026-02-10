@@ -3,7 +3,7 @@
    ======================================== */
 
 #pos {
-  height: calc(100vh - 140px); /* FIXED (never use >100vh) */
+  height: calc(100vh - 140px);
   margin-left: 250px;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -111,7 +111,7 @@
 .pos-cart-items {
   flex: 1;
   overflow-y: auto;
-  min-height: 0; /* IMPORTANT flex fix */
+  min-height: 0;
   margin: 14px 5px 0 5px;
 }
 
@@ -128,7 +128,6 @@
   font-weight: 500;
 }
 
-/* Prevent long names from breaking layout */
 .pos-item span:first-child {
   max-width: 55%;
   overflow: hidden;
@@ -136,7 +135,6 @@
   white-space: nowrap;
 }
 
-/* Align qty + buttons perfectly */
 .pos-item span:last-child {
   display: flex;
   align-items: center;
@@ -188,7 +186,7 @@
 }
 
 .pos-kasse-btn:active {
-  transform: translateY(1px); /* pro press feel */
+  transform: translateY(1px);
 }
 
 /* ================================
