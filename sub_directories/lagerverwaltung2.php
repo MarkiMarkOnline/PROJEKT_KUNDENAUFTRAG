@@ -107,7 +107,6 @@ a.module:hover {
 <main class="grid-lagerverwaltung" id="lager">
     <a href="lagerverwaltung2.php" class="module lager-module" id="bestand">
         <h2>Bestandspflege</h2>
-        <p>Einpflegen von Bestellungen</p>
         <p>Bestände aktualisieren</p>
     </a>
 
@@ -129,54 +128,65 @@ a.module:hover {
 
     <div class="module report-module">
         <h2>Bestand ändern:</h2>
-        <label for="artikelname">Id:</label>
+        <label for="artikelid">ID:</label>
         <input type="number" id="artikelid" name="artikelid" placeholder="Artikel ID">
         <button type="button" id="btn-artikel-suche2">OK</button><br><br>
-        <label for="bestandsaenderung">Bestandsänderung (addierung):</label>
-        <input type="number" id="addbestand" name="addbestand" placeholder="Beständsänderung">
+        <label for="addbestand">Bestandsänderung (Addierung):</label>
+        <input type="number" step="0.01" id="addbestand" name="addbestand" placeholder="Bestandsänderung">
         <button type="button" id="btn-bestandsadd">OK</button><br><br>
     </div>
 
     <div class="module table-module">
         <h2>Artikelliste</h2>
-        <p>Geben Sie einen Suchbegriff ein oder wählen Sie Filter aus...</p>
+        <p>Geben Sie eine Artikel-ID ein...</p>
     </div>
 </main>
 
 <script>
-// JavaScript für Artikelsuche
+// JavaScript für Bestandspflege
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Event Listener für den OK-Button bei der Artikelsuche
-    const suchButton = document.querySelector('#artikelname + button');
-    const artikelnameInput = document.getElementById('artikelname');
+    // Event Listener für ID-Suche
+    const suchButton2 = document.getElementById('btn-artikel-suche2');
+    const artikelidInput = document.getElementById('artikelid');
     const tableModule = document.querySelector('.table-module');
     
-    // Event Listener für den erweiterten Such-Button
-    const erweiterterSuchButton = document.getElementById('btn-erweiterte-suche');
+    // Event Listener für Bestandsänderung
+    const bestandAddButton = document.getElementById('btn-bestandsadd');
+    const addbestandInput = document.getElementById('addbestand');
     
-    if (suchButton) {
-        suchButton.addEventListener('click', artikelSuchen);
+    if (suchButton2) {
+        suchButton2.addEventListener('click', artikelSuchenById);
     }
     
-    if (erweiterterSuchButton) {
-        erweiterterSuchButton.addEventListener('click', erweiterteSuche);
+    if (bestandAddButton) {
+        bestandAddButton.addEventListener('click', bestandAktualisieren);
     }
     
-    // Enter-Taste im Input-Feld unterstützen
-    if (artikelnameInput) {
-        artikelnameInput.addEventListener('keypress', function(e) {
+    // Enter-Taste im ID-Feld unterstützen
+    if (artikelidInput) {
+        artikelidInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                artikelSuchen();
+                artikelSuchenById();
             }
         });
     }
     
-    function artikelSuchen() {
-        const suchbegriff = artikelnameInput.value.trim();
+    // Enter-Taste im Bestandsänderungs-Feld unterstützen
+    if (addbestandInput) {
+        addbestandInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                bestandAktualisieren();
+            }
+        });
+    }
+    
+    // Funktion: Artikel nach ID suchen
+    function artikelSuchenById() {
+        const artikelid = artikelidInput.value.trim();
         
-        if (!suchbegriff) {
-            zeigeNachricht('Bitte geben Sie einen Suchbegriff ein.', 'warning');
+        if (!artikelid) {
+            zeigeNachricht('Bitte geben Sie eine Artikel-ID ein.', 'warning');
             return;
         }
         
@@ -184,20 +194,69 @@ document.addEventListener('DOMContentLoaded', function() {
         tableModule.innerHTML = '<h2>Artikelliste</h2><p class="loading">Suche läuft...</p>';
         
         // AJAX Request
-        fetch('ajax_artikel_suche.php', {
+        fetch('ajax_artikel_suche_id.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'artikelname=' + encodeURIComponent(suchbegriff)
+            body: 'artikelid=' + encodeURIComponent(artikelid)
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Artikel Suche Response:', data); // Debug
+            console.log('Artikel ID Suche Response:', data);
             if (data.success) {
-                zeigeErgebnisse(data.data, data.count, suchbegriff);
+                zeigeErgebnisse(data.data, data.count, 'ID: ' + artikelid);
             } else {
                 zeigeNachricht(data.message, 'info');
+            }
+        })
+        .catch(error => {
+            console.error('Fehler:', error);
+            zeigeNachricht('Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.', 'error');
+        });
+    }
+    
+    // Funktion: Bestand aktualisieren
+    function bestandAktualisieren() {
+        const artikelid = artikelidInput.value.trim();
+        const bestandsaenderung = addbestandInput.value.trim();
+        
+        // Validierung
+        if (!artikelid) {
+            zeigeNachricht('Bitte geben Sie zuerst eine Artikel-ID ein.', 'warning');
+            return;
+        }
+        
+        if (!bestandsaenderung || bestandsaenderung === '') {
+            zeigeNachricht('Bitte geben Sie eine Bestandsänderung ein.', 'warning');
+            return;
+        }
+        
+        // Lade-Animation anzeigen
+        tableModule.innerHTML = '<h2>Artikelliste</h2><p class="loading">Bestand wird aktualisiert...</p>';
+        
+        // AJAX Request
+        fetch('ajax_bestand_update.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'artikelid=' + encodeURIComponent(artikelid) + '&bestandsaenderung=' + encodeURIComponent(bestandsaenderung)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Bestand Update Response:', data);
+            if (data.success) {
+                // Erfolgsmeldung mit Details
+                const aenderung = data.aenderung;
+                const meldung = `✓ ${aenderung.artikel}: ${aenderung.alter_bestand} → ${aenderung.neuer_bestand} (${aenderung.differenz > 0 ? '+' : ''}${aenderung.differenz})`;
+                
+                zeigeErgebnisse(data.data, data.count, meldung);
+                
+                // Bestandsänderungs-Feld leeren (ID bleibt für weitere Buchungen)
+                addbestandInput.value = '';
+            } else {
+                zeigeNachricht(data.message, 'error');
             }
         })
         .catch(error => {
@@ -209,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function zeigeErgebnisse(artikel, anzahl, beschreibung) {
         let html = `
             <h2>Artikelliste</h2>
-            <p><strong>${anzahl}</strong> Artikel gefunden für: "<em>${beschreibung}</em>"</p>
+            <p><strong>${anzahl}</strong> Artikel: <em>${beschreibung}</em></p>
             <div class="table-wrapper">
                 <table class="artikel-tabelle">
                     <thead>
@@ -245,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${a.artikelbezeichnung}</td>
                     <td>${preis}</td>
                     <td>${a.einheit || '-'}</td>
-                    <td>${bestand}</td>
+                    <td><strong>${bestand}</strong></td>
                     <td>${mwst}</td>
                     <td>${a.warengruppen || '-'}</td>
                     <td>${a.herkuenfte || '-'}</td>
@@ -277,83 +336,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!datum) return '-';
         const d = new Date(datum);
         return d.toLocaleDateString('de-DE');
-    }
-    
-    // Erweiterte Suche mit Filtern
-    function erweiterteSuche() {
-        const art = document.getElementById('art').value;
-        const vergleich = document.getElementById('vergleich').value;
-        const anzahl = document.getElementById('anzahl').value;
-        const kategorie = document.getElementById('kategorie').value;
-        const gruppe = document.getElementById('gruppe').value;
-        
-        // Lade-Animation anzeigen
-        tableModule.innerHTML = '<h2>Artikelliste</h2><p class="loading">Suche läuft...</p>';
-        
-        // FormData für POST-Request
-        const formData = new URLSearchParams();
-        formData.append('art', art);
-        formData.append('vergleich', vergleich);
-        formData.append('anzahl', anzahl);
-        formData.append('kategorie', kategorie);
-        formData.append('gruppe', gruppe);
-        
-        // AJAX Request
-        fetch('ajax_erweiterte_suche.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: formData.toString()
-        })
-        .then(response => {
-            // Prüfe ob die Response OK ist
-            if (!response.ok) {
-                throw new Error('HTTP error ' + response.status);
-            }
-            return response.text(); // Erst als Text
-        })
-        .then(text => {
-            console.log('Raw Response:', text); // Debug: Rohe Antwort
-            try {
-                const data = JSON.parse(text);
-                console.log('Parsed Response:', data); // Debug: Geparste Antwort
-                if (data.success) {
-                    let filterBeschreibung = erstelleFilterBeschreibung(art, vergleich, anzahl, kategorie, gruppe);
-                    zeigeErgebnisse(data.data, data.count, filterBeschreibung);
-                } else {
-                    zeigeNachricht(data.message, 'info');
-                }
-            } catch(e) {
-                console.error('JSON Parse Error:', e);
-                console.error('Response Text:', text);
-                zeigeNachricht('Serverfehler: Ungültige Antwort. Siehe Konsole für Details.', 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Fetch Error:', error);
-            zeigeNachricht('Ein Fehler ist aufgetreten: ' + error.message, 'error');
-        });
-    }
-    
-    function erstelleFilterBeschreibung(art, vergleich, anzahl, kategorie, gruppe) {
-        let teile = [];
-        
-        if (art && art !== '' && art !== '-' && anzahl) {
-            const artText = art === 'bestand' ? 'Bestand' : art === 'preis' ? 'Preis' : 'Umsatz';
-            const vergleichText = vergleich === 'groesser' ? 'größer als' : vergleich === 'kleiner' ? 'kleiner als' : 'gleich';
-            teile.push(`${artText} ${vergleichText} ${anzahl}`);
-        }
-        
-        if (kategorie && kategorie !== 'alle') {
-            teile.push(`Kategorie: ${kategorie}`);
-        }
-        
-        if (gruppe && gruppe !== 'alle') {
-            teile.push(`Herkunft: ${gruppe}`);
-        }
-        
-        return teile.length > 0 ? teile.join(' | ') : 'Alle Artikel';
     }
 });
 </script>

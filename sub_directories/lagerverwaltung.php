@@ -107,7 +107,6 @@ a.module:hover {
 <main class="grid-lagerverwaltung" id="lager">
     <a href="lagerverwaltung2.php" class="module lager-module" id="bestand">
         <h2>Bestandspflege</h2>
-        <p>Einpflegen von Bestellungen</p>
         <p>Bestände aktualisieren</p>
     </a>
 
