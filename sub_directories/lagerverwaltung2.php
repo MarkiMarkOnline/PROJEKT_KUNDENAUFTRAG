@@ -107,6 +107,7 @@ a.module:hover {
 <main class="grid-lagerverwaltung" id="lager">
     <a href="lagerverwaltung2.php" class="module lager-module" id="bestand">
         <h2>Bestandspflege</h2>
+        <p>Einpflegen von Bestellungen</p>
         <p>Bestände aktualisieren</p>
     </a>
 
@@ -129,10 +130,9 @@ a.module:hover {
     <div class="module report-module">
         <h2>Bestand ändern:</h2>
         <label for="artikelid">ID:</label>
-        <input type="number" id="artikelid" name="artikelid" placeholder="Artikel ID">
-        <button type="button" id="btn-artikel-suche2">OK</button><br><br>
+        <input type="number" id="artikelid" name="artikelid" placeholder="Artikel ID"><br><br>
         <label for="addbestand">Bestandsänderung (Addierung):</label>
-        <input type="number" step="0.01" id="addbestand" name="addbestand" placeholder="Bestandsänderung">
+        <input type="number" step="0.01" id="addbestand" name="addbestand" placeholder="Optional: Bestandsänderung">
         <button type="button" id="btn-bestandsadd">OK</button><br><br>
     </div>
 
@@ -146,49 +146,54 @@ a.module:hover {
 // JavaScript für Bestandspflege
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Event Listener für ID-Suche
-    const suchButton2 = document.getElementById('btn-artikel-suche2');
     const artikelidInput = document.getElementById('artikelid');
     const tableModule = document.querySelector('.table-module');
-    
-    // Event Listener für Bestandsänderung
     const bestandAddButton = document.getElementById('btn-bestandsadd');
     const addbestandInput = document.getElementById('addbestand');
     
-    if (suchButton2) {
-        suchButton2.addEventListener('click', artikelSuchenById);
-    }
-    
     if (bestandAddButton) {
-        bestandAddButton.addEventListener('click', bestandAktualisieren);
+        bestandAddButton.addEventListener('click', intelligenterButton);
     }
     
-    // Enter-Taste im ID-Feld unterstützen
+    // Enter-Taste in beiden Feldern unterstützen
     if (artikelidInput) {
         artikelidInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                artikelSuchenById();
+                intelligenterButton();
             }
         });
     }
     
-    // Enter-Taste im Bestandsänderungs-Feld unterstützen
     if (addbestandInput) {
         addbestandInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                bestandAktualisieren();
+                intelligenterButton();
             }
         });
     }
     
-    // Funktion: Artikel nach ID suchen
-    function artikelSuchenById() {
+    // Intelligenter Button: entscheidet zwischen Suche und Update
+    function intelligenterButton() {
         const artikelid = artikelidInput.value.trim();
+        const bestandsaenderung = addbestandInput.value.trim();
         
         if (!artikelid) {
             zeigeNachricht('Bitte geben Sie eine Artikel-ID ein.', 'warning');
             return;
         }
+        
+        // Wenn Bestandsänderung leer ist: nur Suche
+        if (!bestandsaenderung || bestandsaenderung === '') {
+            artikelSuchenById();
+        } else {
+            // Wenn Bestandsänderung ausgefüllt: Update durchführen
+            bestandAktualisieren();
+        }
+    }
+    
+    // Funktion: Artikel nach ID suchen
+    function artikelSuchenById() {
+        const artikelid = artikelidInput.value.trim();
         
         // Lade-Animation anzeigen
         tableModule.innerHTML = '<h2>Artikelliste</h2><p class="loading">Suche läuft...</p>';
@@ -220,17 +225,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function bestandAktualisieren() {
         const artikelid = artikelidInput.value.trim();
         const bestandsaenderung = addbestandInput.value.trim();
-        
-        // Validierung
-        if (!artikelid) {
-            zeigeNachricht('Bitte geben Sie zuerst eine Artikel-ID ein.', 'warning');
-            return;
-        }
-        
-        if (!bestandsaenderung || bestandsaenderung === '') {
-            zeigeNachricht('Bitte geben Sie eine Bestandsänderung ein.', 'warning');
-            return;
-        }
         
         // Lade-Animation anzeigen
         tableModule.innerHTML = '<h2>Artikelliste</h2><p class="loading">Bestand wird aktualisiert...</p>';
