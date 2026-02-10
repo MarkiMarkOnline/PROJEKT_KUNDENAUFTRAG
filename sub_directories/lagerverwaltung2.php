@@ -130,15 +130,15 @@ a.module:hover {
     <div class="module report-module">
         <h2>Bestand ändern:</h2>
         <label for="artikelid">ID:</label>
-        <input type="number" id="artikelid" name="artikelid" placeholder="Artikel ID"><br><br>
+        <input type="number" id="artikelid" name="artikelid" placeholder="Artikel ID">
         <label for="addbestand">Bestandsänderung (Addierung):</label>
-        <input type="number" step="0.01" id="addbestand" name="addbestand" placeholder="Optional: Bestandsänderung">
+        <input type="number" step="0.01" id="addbestand" name="addbestand" placeholder="+ / - Wert">
         <button type="button" id="btn-bestandsadd">OK</button><br><br>
     </div>
 
     <div class="module table-module">
         <h2>Artikelliste</h2>
-        <p>Geben Sie eine Artikel-ID ein...</p>
+        <p>Gebe nur eine ID ein um den Artikel aufzurufen, gib eine ID und eine Bestandsänderung ein, um den Bestand zu aktualisieren.</p>
     </div>
 </main>
 

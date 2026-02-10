@@ -107,6 +107,7 @@ a.module:hover {
 <main class="grid-lagerverwaltung" id="lager">
     <a href="lagerverwaltung2.php" class="module lager-module" id="bestand">
         <h2>Bestandspflege</h2>
+        <p>Einpflegen von Bestellungen</p>
         <p>Bestände aktualisieren</p>
     </a>
 
@@ -309,7 +310,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function formatDatum(datum) {
         if (!datum) return '-';
         const d = new Date(datum);
-        return d.toLocaleDateString('de-DE');
+        const tag = String(d.getDate()).padStart(2, '0');
+        const monat = String(d.getMonth() + 1).padStart(2, '0');
+        return `${tag}.${monat}`;
     }
     
     // Erweiterte Suche mit Filtern
