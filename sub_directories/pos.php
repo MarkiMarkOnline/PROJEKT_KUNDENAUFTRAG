@@ -58,7 +58,7 @@ include __DIR__ . '/../includes/sidebar.php';
         </div>
     </div>
 </div>
-
+<script src="../assets/js/pos.js" defer></script>
 <?php include __DIR__ . '/../includes/footer.php'; ?>
 
-<script src="../assets/js/pos.js"></script>
+
