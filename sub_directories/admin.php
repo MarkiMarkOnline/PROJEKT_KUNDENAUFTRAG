@@ -74,13 +74,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_mitarbeiter'])) 
     </div>
 
     <div class="module">
-        <h3>Lagerverwaltung</h3>
-        <button class="admin-btn" data-modal="systemModal">Lagerverwaltung</button>
+        <h3>Systemverwaltung</h3>
+        <button class="admin-btn" data-modal="systemModal">Systemeinstellungen</button>
     </div>
 
     <div class="module">
         <h3>Einstellungen</h3>
-        <button class="admin-btn" data-modal="einstellungenModal" data-no-login="true">Rechte und Zugänge ändern</button>
+        <button class="admin-btn" data-modal="einstellungenModal" data-no-login="true">Einstellungen ändern</button>
     </div>
 
     <div class="module">
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_mitarbeiter'])) 
             <h3>Systemverwaltung</h3>
             <p>Systemverwaltungsfunktionen werden hier angezeigt.</p>
             
-            <button type="button" class="admin-btn">Lagerverwaltung starten</button>
+            <button type="button" class="admin-btn">Systemupdates prüfen</button>
             <button type="button" class="admin-btn">Systemdiagnose</button>
             <button type="button" class="admin-btn admin-btn-secondary close-without-save">Schließen</button>
         </div>
