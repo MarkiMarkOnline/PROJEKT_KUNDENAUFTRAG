@@ -128,47 +128,13 @@ a.module:hover {
     </div>
 
     <div class="module report-module">
-        <h2>Bericht über:</h2>
-
-        <label for="artikelname">Suche nach Artikel: </label>
-        <input type="text" id="artikelname" name="artikelname" placeholder="Artikelname eingeben...">
-        <button type="button" id="btn-artikel-suche">OK</button><br><br>
-
-        <label for="art">Zeige alle Artikel mit einem:</label>
-        <select id="art" name="art">
-            <option value="bestand"> - </option>
-            <option value="bestand">Bestand</option>
-            <option value="preis">Preis</option>
-            <option value="umsatz">Umsatz</option>
-        </select>
-
-        <select id="vergleich" name="vergleich">
-            <option value="gleich">gleich</option>
-            <option value="groesser">größer</option>
-            <option value="kleiner">kleiner</option>
-        </select>
-
-        <input type="number" id="anzahl" name="anzahl" placeholder="Wert">
-
-        <label for="kategorie">aus der Kategorie: </label>
-        <select id="kategorie" name="kategorie">
-            <option value="alle">Alle</option>
-            <option value="Obst">Obst</option>
-            <option value="Gemüse">Gemüse</option>
-            <option value="Milchprodukt">Milchprodukt</option>
-            <option value="Fleisch">Fleisch</option>
-            <option value="Nüsse">Nüsse</option>
-            <option value="Marmelade">Marmelade</option>
-            <option value="Öl">Öl</option>
-        </select>
-
-        <select id="gruppe" name="gruppe">
-            <option value="alle">Alle</option>
-            <option value="Eigenerzeugnis">Eigenerzeugnis</option>
-            <option value="Eigenproduktion">Eigenproduktion</option>
-            <option value="Zulieferung">Zulieferung</option>
-        </select>
-        <button type="button" id="btn-erweiterte-suche">OK</button>
+        <h2>Bestand ändern:</h2>
+        <label for="artikelname">Id:</label>
+        <input type="number" id="artikelid" name="artikelid" placeholder="Artikel ID">
+        <button type="button" id="btn-artikel-suche2">OK</button><br><br>
+        <label for="bestandsaenderung">Bestandsänderung (addierung):</label>
+        <input type="number" id="addbestand" name="addbestand" placeholder="Beständsänderung">
+        <button type="button" id="btn-bestandsadd">OK</button><br><br>
     </div>
 
     <div class="module table-module">
